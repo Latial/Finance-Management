@@ -1,0 +1,11 @@
+services:
+  finance-data:
+    image: postgres:latest
+    container_name: finance-data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+

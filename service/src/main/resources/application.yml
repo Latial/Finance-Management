@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: FinanceManagement
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: password
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  mail:
+    host: smtp-relay.brevo.com
+    port: 587
+    password: "RDa5TtMw43Fb6V9H"
+    username: "7a4b95001@smtp-brevo.com"
+
+finance:
+  security:
+    base-64-secret: 'DYI3io14ELGDGDTp2/aCDb/jUJIimQKf8JuW24bwMtZTS8EPAt9xNDTzbcprPRtFL/KG2woCr1p5LaCi1CZrPA=='
+  cors:
+    allowed-origins: 'http://localhost:3000,http://localhost:8080'
+    allowed-methods: '*'
+    allowed-headers: '*'
+    exposed-headers: 'Authorization,Link,X-Total-Count'
+    allow-credentials: true
+    max-age: 1800
+
+
+  batch:
+    import-data: false
+    write-description: false
+
+  base-url: http://localhost:8080
+
+logging:
+  level:
+    org.springframework.security: DEBUG
