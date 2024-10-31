@@ -37,7 +37,7 @@ export function HeaderActions() {
                     </NavigationMenuItem>}
                     {!isLoggedIn && <NavigationMenuItem>
                         <Link href="/sign-in" legacyBehavior passHref>
-                            <Button>
+                            <Button variant= "orange">
                                 Log In
                             </Button>
                         </Link>
