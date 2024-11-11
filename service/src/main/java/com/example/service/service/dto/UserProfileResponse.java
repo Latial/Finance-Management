@@ -27,8 +27,12 @@ public class UserProfileResponse {
 
     @NotNull
     @Size(min = 5, max = 254)
-    private String username;
+    private String firstName;
 
     @NotNull
-    private Set<ExpendResponse> favoriteBeats = new LinkedHashSet<>();
+    @Size(min = 5, max = 254)
+    private String lastName;
+
+    @NotNull
+    private Set<ExpendResponse> userExpends = new LinkedHashSet<>();
 }

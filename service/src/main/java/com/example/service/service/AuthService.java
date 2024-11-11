@@ -39,7 +39,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
     private final FinanceManagementProperties financeManagementProperties;
-    //private final MailService mailService;
+    private final MailService mailService;
 
     public AuthorizationResponse authenticate(AuthorizeRequest authenticationRequest) {
         var authenticationToken = new UsernamePasswordAuthenticationToken(
@@ -81,10 +81,6 @@ public class AuthService {
                 .ifPresent(_ -> {
                     throw new EmailAlreadyUsedException();
                 });
-        userRepository.findByUsername(registerUserRequest.getUsername())
-                .ifPresent(_ -> {
-                    throw new UsernameAlreadyUsedException();
-                });
 
         var activationToken = UUID.randomUUID().toString();
 
@@ -92,14 +88,15 @@ public class AuthService {
 
         var encodedPassword = passwordEncoder.encode(registerUserRequest.getPassword());
         user.setPassword(encodedPassword);
-        user.setUsername(registerUserRequest.getUsername());
+        user.setFirstName(registerUserRequest.getFirstName());
+        user.setLastName(registerUserRequest.getLastName());
         user.setEmail(registerUserRequest.getEmail());
         user.setActive(false);
         user.setActivationToken(activationToken);
         userRepository.save(user);
 
         var activationLink = "%s/api/auth/activate?token=%s".formatted(financeManagementProperties.getBaseUrl(), activationToken);
-        //mailService.sendActivationEmail(user.getEmail(), user.getUsername(), activationLink);
+        mailService.sendActivationEmail(user.getEmail(), user.getFirstName(), activationLink);
 
         var authRequest = new AuthorizeRequest(registerUserRequest.getEmail(),registerUserRequest.getPassword());
         var authResponse = authenticate(authRequest);

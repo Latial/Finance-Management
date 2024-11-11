@@ -23,5 +23,8 @@ public class RegisterUserRequest implements Serializable {
     private String email;
     @NotNull
     @Size(min = 5, max = 60)
-    private String username;
+    private String firstName;
+    @NotNull
+    @Size(min = 5, max = 60)
+    private String lastName;
 }

@@ -16,7 +16,7 @@ import java.util.Set;
 @Setter
 @Service
 @DiscriminatorValue(AuthoritiesConstants.USER)
-@Table(name = "finance_management_user")
+@Table(name = "finance_user")
 public class User {
     @Id
     @GeneratedValue
@@ -26,8 +26,11 @@ public class User {
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
-    @Column(name = "username", unique = true, nullable = false)
-    private String username;
+    @Column(name = "first_name", unique = false, nullable = false)
+    private String firstName;
+
+    @Column(name = "last_name", unique = false, nullable = false)
+    private String lastName;
 
     @Column(name = "password", nullable = false)
     private String password;
