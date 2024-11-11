@@ -49,13 +49,14 @@ export type RegisterApiArg = {
 export type RegisterUserRequest = {
     password: string;
     email: string;
-    username : string;
-    receiveNewsletters: boolean;
+    firstName : string;
+    lastName: string;
 };
 export type UserProfileResponse = {
     id: number;
     email: string;
-    username: string;
+    firstName: string;
+    lastName : string;
     favoriteBeats: Array<any>;
 };
 export type AuthenticationRequest = {
