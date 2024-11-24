@@ -72,7 +72,7 @@ export default function SingIn() {
     return <main className="flex justify-center items-center flex-col">
         <div className= "mx-auto py-10 flex">
             <Card className="p-10 w-96 border-none relative">
-                <h1 className="text-3xl font-bold mb-5">Prijavi se</h1>
+                <h1 className="text-3xl font-bold mb-5">Sign Up</h1>
 
                 <Form {...form}>
                     {authorizeResult.isError &&
@@ -105,7 +105,7 @@ export default function SingIn() {
                             name="password"
                             render={({field}) => (
                                 <FormItem>
-                                    <FormLabel>Lozinka</FormLabel>
+                                    <FormLabel>Password</FormLabel>
                                     <FormControl>
                                         <Input type="password" placeholder="Password" {...field} />
                                     </FormControl>

@@ -57,7 +57,6 @@ export type UserProfileResponse = {
     email: string;
     firstName: string;
     lastName : string;
-    favoriteBeats: Array<any>;
 };
 export type AuthenticationRequest = {
     email: string;
