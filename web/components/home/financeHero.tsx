@@ -8,7 +8,7 @@ import {Search} from "lucide-react";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 
-export default function FinanceSearch() {
+export default function FinanceHero() {
     const [search, setSearch] = React.useState("");
 
     const debouncedSearch = useDebounce(search, 500);
@@ -18,14 +18,17 @@ export default function FinanceSearch() {
     })
 
     const isLoggedIn = currentAccountResponse.data !== undefined;
-    return <div className="w-full xl:w-2/3 min-h-full flex justify-start items-start flex-col">
+    return <div className="w-full min-h-full flex justify-center items-center flex-col">
         {isLoggedIn ?
-            <div>
-                <p>You can search your history here</p>
-            </div>
+            <h1 className= "text-3xl">Welcome back</h1>
             :
             <div>
-                <p>Please log in or sign up to save your expenses. Otherwise we can't guarantee they will stay forever</p>
+                <h3 className="text-3xl">Welcome to our app, here you can track you expenses</h3>
+                <p className="text-xl">Simply start by logging in or signing up if you dont have an account</p>
+                <p className="text-xl">Then track everything from your profile</p>
+                <Link href = "/sign-in">
+                <Button variant= "secondaryGreen" className= "text-xl rounded-lg my-5">Log In</Button>
+                </Link>
             </div>
         }
     </div>;
