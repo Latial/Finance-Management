@@ -31,6 +31,11 @@ public class ProfileController {
         return Long.parseLong(idOrMe);
 
     }
+    @PostMapping("/add")
+    public ResponseEntity<ExpendAddResponse> addExpend(@RequestBody @Valid ExpendAddRequest expendAddRequest) {
+        var reponse = profileServices.addExpend(expendAddRequest);
+        return ResponseEntity.ok(reponse);
+    }
     /*@PostMapping("/favorite")
     public ResponseEntity<FavoriteResponse> addFavorite(@RequestBody FavoriteRequest favoriteRequest) {
         var response = profileServices.addFavoriteBeats(favoriteRequest);

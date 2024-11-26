@@ -29,7 +29,7 @@ finance:
 
 
   batch:
-    import-data: false
+    import-data: true
     write-description: false
 
   base-url: http://localhost:8080

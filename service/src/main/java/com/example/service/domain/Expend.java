@@ -28,6 +28,10 @@ public class Expend {
     @JoinColumn(name = "type_id")
     private ExpendType type;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @ManyToMany(mappedBy = "userExpends")
     private Set<User> expends = new LinkedHashSet<>();
 }

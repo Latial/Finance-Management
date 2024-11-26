@@ -2,6 +2,7 @@ package com.example.service.controller;
 
 import com.example.service.service.ExpendTypeService;
 import com.example.service.service.dto.ExpendTypeResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.Mapping;
@@ -12,8 +13,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/expendType")
+@RequiredArgsConstructor
 public class ExpendTypeController {
-    private ExpendTypeService expendTypeService;
+    private final ExpendTypeService expendTypeService;
 
     @GetMapping
     public ResponseEntity<List<ExpendTypeResponse>> getAllExpendTypes() {

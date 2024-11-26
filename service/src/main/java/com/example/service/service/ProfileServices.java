@@ -37,6 +37,18 @@ public class ProfileServices {
     }
 
     @Transactional
+    public ExpendAddResponse addExpend(ExpendAddRequest expendAddRequest) {
+        var expend =  expendRepository.findById(expendAddRequest.getExpend_id())
+                .orElseThrow(() -> new EntityNotFoundException("Expend not found"));
+        var user = userRepository.findById(expendAddRequest.getUser_id())
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+        user.getUserExpends().add(expend);
+
+        return ExpendAddResponse
+                .builder()
+                .build();
+    }
+    @Transactional
     public List<UserProfileResponse> getFavorite() {
         return userRepository
                 .findAll()
