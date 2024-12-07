@@ -1,15 +1,24 @@
 import React from 'react'
+import fetchJson from "@/lib/fetch";
+import {GetWholeHistoryApiResponse} from "@/lib/redux/api/api";
 
 export default async function History() {
+    const history = await fetchJson<GetWholeHistoryApiResponse>(`/api/history`);
     return (
         <div className="p-5 bg-[#191917] rounded-3xl">
             <h1 className="text-2xl font-bold flex items-center mb-10">
-                History
+                Expanses
             </h1>
-
-            <div className="prose rounded-3xl dark:prose-invert grid grid-cols-4 gap-5">
-
-            </div>
+            {history.map((single, index) =>
+                <div className="flex flex-row items-center gap-5">
+                    <p>{single.id}</p>
+                    <p>{single.date}</p>
+                    <p className="text-xl">{single.type.type}</p>
+                    <h4 className="text-xl">{single.expendName}</h4>
+                    <p className="text-xl">${single.expendPrice}</p>
+                    <p className="text-xl">{single.type.type}</p>
+                </div>
+            )}
         </div>
     )
 }

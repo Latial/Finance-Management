@@ -4,7 +4,8 @@ export const addTagTypes = [
     "authenticate-controller",
     "profile-controller",
     "expendTypes-controller",
-    "expend-controller"
+    "expend-controller",
+    "history-controller"
 ] as const;
 
 const injectedRtkApi = api.enhanceEndpoints({
@@ -25,6 +26,13 @@ const injectedRtkApi = api.enhanceEndpoints({
             >({
                 query: () => ({ url: `/api/MoodType`}),
                 providesTags: ["expendTypes-controller"],
+            }),
+            getWholeHistory : build.query<
+                GetWholeHistoryApiResponse,
+                GetWholeHistoryApiArgs
+            >({
+                query: () => ({ url: `/api/history`}),
+                providesTags: ["history-controller"],
             }),
             authorize: build.mutation<AuthorizeApiResponse, AuthorizeApiArg>({
                 query: (queryArg) => ({
@@ -54,6 +62,7 @@ const injectedRtkApi = api.enhanceEndpoints({
                 }),
                 invalidatesTags: ["expend-controller"],
             }),
+
             expanseAlone: build.mutation<ExpendAloneApiResponse, ExpendAloneApiArg>({
                 query: (queryArg) => ({
                     url: `/api/expend/addExpend`,
@@ -61,6 +70,14 @@ const injectedRtkApi = api.enhanceEndpoints({
                     body: queryArg.expendAloneRequest,
                 }),
                 invalidatesTags: ["expend-controller"],
+            }),
+            history : build.mutation<HistoryApiResponse, HistoryApiArg>({
+                query: (queryArg) => ({
+                    url: `/api/history/addHistoryDate`,
+                    method: "POST",
+                    body: queryArg.historyRequest,
+                }),
+                invalidatesTags: ["history-controller"],
             }),
             logout: build.mutation<LogoutApiResponse, LogoutApiArg>({
                 query: () => ({ url: `/api/logout`, method: "POST" }),
@@ -74,7 +91,10 @@ export type GetAllExpendTypesApiResponse =
 export type GetAllExpendTypesApiArgs = void;
 export type GetAllExpendsApiResponse =
 /** status 200 OK */ ExpendResponse[];
+export type GetWholeHistoryApiResponse =
+/** status 200 OK */ HistoryResponseAll[];
 export type GetAllExpendsApiArgs = void;
+export type GetWholeHistoryApiArgs = void;
 export type AuthorizeApiResponse = /** status 200 OK */ AuthenticationResponse;
 export type AuthorizeApiArg = {
     authenticationRequest: AuthenticationRequest;
@@ -92,6 +112,13 @@ export type ExpendResponse = {
     id:number;
     name : string;
     price :string;
+    type: ExpendTypeResponse;
+}
+export type HistoryResponseAll = {
+    id:number;
+    date : Date;
+    expendName : string;
+    expendPrice :string;
     type: ExpendTypeResponse;
 }
 export type RegisterUserRequest = {
@@ -125,12 +152,21 @@ export type ExpendAddApiResponse = ExpendAddResponse;
 export type ExpendAddApiArg = {expendRequest : ExpendRequest}
 
 export type ExpendAloneApiResponse = ExpendAloneResponse;
+export type HistoryApiResponse = HistoryResponse;
 export type ExpendAloneApiArg = {expendAloneRequest : ExpendAloneRequest}
+export type HistoryApiArg = {historyRequest : HistoryRequest}
 export type ExpendRequest = {
     user_id : number;
     type_id : number;
 }
 export type ExpendAloneRequest = {
+    name : string;
+    price : number;
+    typeName : string;
+    userId? : string;
+}
+export type HistoryRequest = {
+    date : Date;
     name : string;
     price : number;
     typeName : string;
@@ -142,12 +178,16 @@ export type ExpendAddResponse = {
 export type ExpendAloneResponse = {
     result? : Array<any>;
 }
+export type HistoryResponse = {
+    result? : Array<any>;
+}
 export type LogoutApiResponse = unknown;
 export type LogoutApiArg = void;
 export { injectedRtkApi as api };
 export const {
     useAuthorizeMutation,
     useExpanseAloneMutation,
+    useHistoryMutation,
     useExpanseAddMutation,
     useRegisterMutation,
     useLogoutMutation,
