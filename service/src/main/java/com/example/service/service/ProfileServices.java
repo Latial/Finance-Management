@@ -48,6 +48,7 @@ public class ProfileServices {
                 .builder()
                 .build();
     }
+
     @Transactional
     public List<UserProfileResponse> getFavorite() {
         return userRepository
