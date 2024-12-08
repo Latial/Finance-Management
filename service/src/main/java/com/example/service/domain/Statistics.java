@@ -28,6 +28,15 @@ public class Statistics {
     @Column(name = "smallestExpend", nullable = true)
     private Double smallestExpend;
 
+    @Column(name = "fixedCostsCount", nullable = true)
+    private Double fixedCostsCount;
+
+    @Column(name = "flexibleCostsCount", nullable = true)
+    private Double flexibleCostsCount;
+
+    @Column(name = "bigPurchasesCount", nullable = true)
+    private Double bigPurchasesCount;
+
     @Column(name = "monthlyExpend", nullable = true)
     private Double monthlyExpend;
 }

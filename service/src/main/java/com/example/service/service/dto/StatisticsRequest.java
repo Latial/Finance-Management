@@ -11,4 +11,5 @@ import lombok.NoArgsConstructor;
 public class StatisticsRequest {
     @NotNull
     private String userId;
+    private Long month;
 }

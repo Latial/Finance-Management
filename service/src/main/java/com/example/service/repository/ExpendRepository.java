@@ -14,4 +14,5 @@ public interface ExpendRepository extends JpaRepository<Expend, Long> , JpaSpeci
     List<Expend> findTopExpenseByUserId(@Param("userId") Long userId);
     @Query("SELECT e FROM Expend e WHERE e.user.id = :userId ORDER BY e.price ASC")
     List<Expend> findLowestExpenseByUserId(@Param("userId") Long userId);
+    Long countExpendByTypeId(Long typeId);
 }

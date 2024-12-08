@@ -42,23 +42,27 @@ public class StatisticsService {
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
         var expendHigh = expendRepository.findTopExpenseByUserId(Long.parseLong(statisticsRequest.getUserId()));
         var expendLow = expendRepository.findLowestExpenseByUserId(Long.parseLong(statisticsRequest.getUserId()));
-        if (statisticsRepository.count() > 0) {
-            Statistics stat = statisticsRepository.findByUserId(Long.parseLong(statisticsRequest.getUserId()));
-            stat.setBiggestExpend(expendHigh.getFirst().getPrice());
-            stat.setMonthlyExpend(0.0);
-            stat.setSmallestExpend(expendLow.getFirst().getPrice());
-            statisticsRepository.save(stat);
-        }
-        else {
-            var stat = new Statistics();
+        var monthlyExpends = historyRepository.findTotalSpendingsForMonthAndYear(Math.toIntExact(statisticsRequest.getMonth()),2024);
+        var fixedCostsCount = expendRepository.countExpendByTypeId(1L);
+        var flexibleCostsCount = expendRepository.countExpendByTypeId(2L);
+        var bigPurchaseCount = expendRepository.countExpendByTypeId(3L);
+        Statistics stat = statisticsRepository.count() > 0
+                ? statisticsRepository.findByUserId(Long.parseLong(statisticsRequest.getUserId()))
+                : new Statistics();
+
+        if (stat.getId() == null) {
             stat.setUser(user);
-            stat.setBiggestExpend(expendHigh.getFirst().getPrice());
-            stat.setMonthlyExpend(0.0);
-            stat.setSmallestExpend(expendLow.getFirst().getPrice());
-            statisticsRepository.save(stat);
         }
-        return StatisticsResponse
-                .builder()
-                .build();
+        stat.setBiggestExpend(expendHigh.getFirst().getPrice());
+        stat.setMonthlyExpend(monthlyExpends);
+        stat.setSmallestExpend(expendLow.getFirst().getPrice());
+        stat.setFixedCostsCount(Double.valueOf(fixedCostsCount));
+        stat.setFlexibleCostsCount(Double.valueOf(flexibleCostsCount));
+        stat.setBigPurchasesCount(Double.valueOf(bigPurchaseCount));
+
+        statisticsRepository.save(stat);
+        return statisticsRepository.findById(stat.getId())
+                .map(statisticsMapper::toResponse)
+                .orElseThrow();
     }
 }
