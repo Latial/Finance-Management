@@ -162,7 +162,7 @@ export type ExpendAddApiArg = {expendRequest : ExpendRequest}
 
 export type ExpendAloneApiResponse = ExpendAloneResponse;
 export type HistoryApiResponse = HistoryResponse;
-export type StatsApiResponse = StatsResponse;
+export type StatsApiResponse = StatisticsResponse;
 export type ExpendAloneApiArg = {expendAloneRequest : ExpendAloneRequest}
 export type HistoryApiArg = {historyRequest : HistoryRequest}
 export type StatsApiArg = {statsRequest : StatsRequest}
@@ -185,6 +185,7 @@ export type HistoryRequest = {
 }
 export type StatsRequest = {
     userId? : string;
+    month? : string;
 }
 export type ExpendAddResponse = {
     result? : Array<any>;
@@ -195,8 +196,13 @@ export type ExpendAloneResponse = {
 export type HistoryResponse = {
     result? : Array<any>;
 }
-export type StatsResponse = {
-    result? : Array<any>;
+export type StatisticsResponse = {
+    biggestExpend :number
+    smallestExpend : number
+    monthlyExpend : number
+    fixedCostCount : number
+    bigPurchasesCount : number
+    flexibleCostsCount : number
 }
 export type LogoutApiResponse = unknown;
 export type LogoutApiArg = void;

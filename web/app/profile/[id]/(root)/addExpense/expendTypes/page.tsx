@@ -1,10 +1,11 @@
 "use client"
 
 import React, {useEffect, useState} from 'react'
-import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
+import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
 import {Input} from "@/components/ui/input";
 import {useForm} from "react-hook-form";
 import {z} from "zod";
+import { cn } from "@/lib/utils"
 import {zodResolver} from "@hookform/resolvers/zod";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
@@ -17,7 +18,20 @@ import config from "@/lib/config";
 import {jwtDecode} from "jwt-decode";
 import {useJwt} from "react-jwt";
 import {useParams} from "react-router";
-
+import {
+    Command,
+    CommandEmpty,
+    CommandGroup,
+    CommandInput,
+    CommandItem,
+    CommandList,
+} from "@/components/ui/command"
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover"
+import ShowStatsMonth from "@/components/ShowStatsMonth";
 
 const formSchema = z.object ({
     item: z.string()
@@ -27,8 +41,15 @@ const formSchema = z.object ({
     type: z.enum(["Fixed Costs", "Flexible Costs", "Big Purchases"], {
         required_error: "You need to select a type.",
     }),
+    month: z.string({
+        required_error: "Please select a language.",
+    }),
 })
-
+const formSchema2 = z.object ({
+    month: z.string({
+        required_error: "Please select a language.",
+    }),
+})
 export default function ExpendType() {
     const [data, setData] = useState<any[]>([])
 
@@ -95,86 +116,103 @@ export default function ExpendType() {
 
         }
     }
+    const months = [
+        { label: "January", value: "1" },
+        { label: "February", value: "2" },
+        { label: "March", value: "3" },
+        { label: "April", value: "4" },
+        { label: "May", value: "5" },
+        { label: "June", value: "6" },
+        { label: "July", value: "7" },
+        { label: "August", value: "8" },
+        { label: "September", value: "9" },
+        { label: "October", value: "10" },
+        { label: "November", value: "11" },
+        { label: "December", value: "12" }
+    ] as const
 
     return (
-        <div className="p-5 bg-[#191917] rounded-3xl">
-            <h1 className="text-2xl font-bold flex items-center mb-10">
-                AddExpanse
-            </h1>
-            <div className="prose rounded-3xl dark:prose-invert w-full">
-                <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)}>
-                        <FormField
-                            control={form.control}
-                            name="item"
-                            render={({field}) => (
-                                <FormItem className={"w-full"}>
-                                    <FormLabel>Add Item</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            placeholder="Add Item Name"
-                                            {...field}
-                                        />
-                                    </FormControl>
-                                    <div className="h-6">
-                                        <FormMessage/>
-                                    </div>
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="price"
-                            render={({field}) => (
-                                <FormItem className={"w-full"}>
-                                    <FormLabel>Add Price</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            placeholder="Add price"
-                                            {...field}
-                                        />
-                                    </FormControl>
-                                    <div className="h-6">
-                                        <FormMessage/>
-                                    </div>
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="type"
-                            render={({ field }) => (
-                                <FormItem className="space-y-3">
-                                    <FormLabel>Expend type</FormLabel>
-                                    <FormControl>
-                                        <RadioGroup
-                                            onValueChange={field.onChange}
-                                            defaultValue={field.value}
-                                            className="flex flex-col space-y-1"
-                                        >
-                                            {data.map((data, index) =>
-                                                <FormItem className="flex items-center space-x-3 space-y-0">
-                                                    <FormControl>
-                                                        <RadioGroupItem value= {data.type} />
-                                                    </FormControl>
-                                                    <FormLabel className="font-normal">
-                                                        {data.type}
-                                                    </FormLabel>
-                                                </FormItem>
-                                            )}
-                                        </RadioGroup>
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <Button type="submit" variant="destructive" className="w-full mt-5 bg-red-500">
-                            Add Expense
-                        </Button>
+        <div className = "flex flex-row gap-6">
+            <div className="p-5 bg-[#191917] rounded-3xl">
+                <h1 className="text-2xl font-bold flex items-center mb-10">
+                    AddExpanse
+                </h1>
+                <div className="prose rounded-3xl dark:prose-invert w-full">
+                    <Form {...form}>
+                        <form onSubmit={form.handleSubmit(onSubmit)}>
+                            <FormField
+                                control={form.control}
+                                name="item"
+                                render={({field}) => (
+                                    <FormItem className={"w-full"}>
+                                        <FormLabel>Add Item</FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                placeholder="Add Item Name"
+                                                {...field}
+                                            />
+                                        </FormControl>
+                                        <div className="h-6">
+                                            <FormMessage/>
+                                        </div>
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="price"
+                                render={({field}) => (
+                                    <FormItem className={"w-full"}>
+                                        <FormLabel>Add Price</FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                placeholder="Add price"
+                                                {...field}
+                                            />
+                                        </FormControl>
+                                        <div className="h-6">
+                                            <FormMessage/>
+                                        </div>
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="type"
+                                render={({ field }) => (
+                                    <FormItem className="space-y-3">
+                                        <FormLabel>Expend type</FormLabel>
+                                        <FormControl>
+                                            <RadioGroup
+                                                onValueChange={field.onChange}
+                                                defaultValue={field.value}
+                                                className="flex flex-col space-y-1"
+                                            >
+                                                {data.map((data, index) =>
+                                                    <FormItem className="flex items-center space-x-3 space-y-0">
+                                                        <FormControl>
+                                                            <RadioGroupItem value= {data.type} />
+                                                        </FormControl>
+                                                        <FormLabel className="font-normal">
+                                                            {data.type}
+                                                        </FormLabel>
+                                                    </FormItem>
+                                                )}
+                                            </RadioGroup>
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <Button type="submit" variant="destructive" className="w-full mt-5 bg-red-500">
+                                Add Expense
+                            </Button>
 
-                    </form>
-                </Form>
+                        </form>
+                    </Form>
+                </div>
             </div>
-        </div>
-    )
-}
+            <ShowStatsMonth/>
+            </div>
+            )
+            }
