@@ -5,7 +5,8 @@ export const addTagTypes = [
     "profile-controller",
     "expendTypes-controller",
     "expend-controller",
-    "history-controller"
+    "history-controller",
+    "stats-controller"
 ] as const;
 
 const injectedRtkApi = api.enhanceEndpoints({
@@ -78,6 +79,14 @@ const injectedRtkApi = api.enhanceEndpoints({
                     body: queryArg.historyRequest,
                 }),
                 invalidatesTags: ["history-controller"],
+            }),
+            stats : build.mutation<StatsApiResponse, StatsApiArg>({
+                query: (queryArg) => ({
+                    url: `/api/stats/addStat`,
+                    method: "POST",
+                    body: queryArg.statsRequest,
+                }),
+                invalidatesTags: ["stats-controller"],
             }),
             logout: build.mutation<LogoutApiResponse, LogoutApiArg>({
                 query: () => ({ url: `/api/logout`, method: "POST" }),
@@ -153,8 +162,10 @@ export type ExpendAddApiArg = {expendRequest : ExpendRequest}
 
 export type ExpendAloneApiResponse = ExpendAloneResponse;
 export type HistoryApiResponse = HistoryResponse;
+export type StatsApiResponse = StatsResponse;
 export type ExpendAloneApiArg = {expendAloneRequest : ExpendAloneRequest}
 export type HistoryApiArg = {historyRequest : HistoryRequest}
+export type StatsApiArg = {statsRequest : StatsRequest}
 export type ExpendRequest = {
     user_id : number;
     type_id : number;
@@ -172,6 +183,9 @@ export type HistoryRequest = {
     typeName : string;
     userId? : string;
 }
+export type StatsRequest = {
+    userId? : string;
+}
 export type ExpendAddResponse = {
     result? : Array<any>;
 }
@@ -181,6 +195,9 @@ export type ExpendAloneResponse = {
 export type HistoryResponse = {
     result? : Array<any>;
 }
+export type StatsResponse = {
+    result? : Array<any>;
+}
 export type LogoutApiResponse = unknown;
 export type LogoutApiArg = void;
 export { injectedRtkApi as api };
@@ -188,6 +205,7 @@ export const {
     useAuthorizeMutation,
     useExpanseAloneMutation,
     useHistoryMutation,
+    useStatsMutation,
     useExpanseAddMutation,
     useRegisterMutation,
     useLogoutMutation,

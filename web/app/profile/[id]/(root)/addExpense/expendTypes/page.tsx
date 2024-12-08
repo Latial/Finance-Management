@@ -12,7 +12,7 @@ import fetchJson from "@/lib/fetch";
 import {Checkbox} from "@/components/ui/checkbox";
 import { Toast } from "@/components/hooks/use-toast"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import {useExpanseAloneMutation, useHistoryMutation} from "@/lib/redux/api/api";
+import {useExpanseAloneMutation, useHistoryMutation, useStatsMutation} from "@/lib/redux/api/api";
 import config from "@/lib/config";
 import {jwtDecode} from "jwt-decode";
 import {useJwt} from "react-jwt";
@@ -42,6 +42,7 @@ export default function ExpendType() {
 
 
     const [add, addResult] = useExpanseAloneMutation();
+    const[addStat, statResult] = useStatsMutation();
     const [addHistory, addHistoryResult] = useHistoryMutation();
     const [user, setUser] = useState("default");
 
@@ -71,6 +72,11 @@ export default function ExpendType() {
                     name: values.item,
                     price: values.price,
                     typeName: values.type,
+                    userId : id
+                }
+            })
+            const resultStat = await addStat({
+                statsRequest: {
                     userId : id
                 }
             })
