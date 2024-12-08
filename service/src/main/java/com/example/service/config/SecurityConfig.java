@@ -86,6 +86,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET, "/api/expend").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/history").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/expend/addExpend").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/stats/addStat").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/history/addHistoryDate").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/expend/**").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/expend").permitAll()
