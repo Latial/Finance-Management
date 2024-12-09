@@ -32,6 +32,8 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover"
 import {Check, ChevronsUpDown} from "lucide-react";
+import {PieChart} from "@mui/x-charts/PieChart";
+import {BarChart} from "@mui/x-charts";
 
 const formSchema = z.object ({
     month: z.string({
@@ -91,11 +93,11 @@ export default function ShowStatsMonth() {
 
     return (
         <>
-            <div>
-                <h1 className="text-2xl font-bold flex items-center mb-10">
-                    AddExpanse
-                </h1>
+            <div className = "flex flex-row">
                 <div className="flex flex-col">
+                    <h1 className="text-2xl font-bold flex items-center mb-10">
+                        See monthly expends
+                    </h1>
                     <div className="prose rounded-3xl dark:prose-invert w-full">
                         <Form {...form}>
                             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -169,14 +171,36 @@ export default function ShowStatsMonth() {
                             </form>
                         </Form>
                     </div>
-                    <div className= "flex flex-col mt-2 gap-2">
+                    <div className="flex flex-col mt-2 gap-2">
                         <p>Monthly Expend : ${data ? data.monthlyExpend : 0}</p>
                         <p>Biggest Expend : ${data ? data.biggestExpend : 0}</p>
                         <p>Smallest Expend : ${data ? data.smallestExpend : 0}</p>
-                        <p>Big Purchase ${data ? data.bigPurchasesCount : 0}</p>
-                        <p>Fixed Costs : {data ? data.fixedCostCount : 0}</p>
-                        <p>Flexible Costs :{data ? data.flexibleCostsCount : 0}</p>
+                        <p>Big Purchase {data ? data.bigPurchasesCountMonth : 0}</p>
+                        <p>Fixed Costs : {data ? data.fixedCostsCountMonth : 0}</p>
+                        <p>Flexible Costs :{data ? data.flexibleCostsCountMonth : 0}</p>
                     </div>
+                </div>
+                <div className= "flex flex-col w-full">
+                    <PieChart
+                              colors={['gray', 'yellow', 'orange']}
+                        series={[
+                            {
+                                data: [
+                                    { id: 0, value: data ? data.fixedCostsCountMonth : 0, label: `Fixed Costs`},
+                                    { id: 1, value: data ? data.flexibleCostsCountMonth : 0, label: 'Flexible Costs' },
+                                    { id: 2, value: data ? data.bigPurchasesCountMonth : 0, label: 'Big Purchase' },
+                                ],
+                            },
+                        ]}
+                        width={400}
+                        height={200}
+                    />
+                    <BarChart
+                        xAxis={[{ scaleType: 'band', data: ['group A', 'group B'] }]}
+                        series={[{ data: [4, 3] }, { data: [1, 6] }, { data: [2, 5] }]}
+                        width={500}
+                        height={300}
+                    />
                 </div>
             </div>
         </>

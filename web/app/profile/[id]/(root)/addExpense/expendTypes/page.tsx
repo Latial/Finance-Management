@@ -17,20 +17,7 @@ import {useExpanseAloneMutation, useHistoryMutation, useStatsMutation} from "@/l
 import config from "@/lib/config";
 import {jwtDecode} from "jwt-decode";
 import {useJwt} from "react-jwt";
-import {useParams} from "react-router";
-import {
-    Command,
-    CommandEmpty,
-    CommandGroup,
-    CommandInput,
-    CommandItem,
-    CommandList,
-} from "@/components/ui/command"
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from "@/components/ui/popover"
+
 import ShowStatsMonth from "@/components/ShowStatsMonth";
 
 const formSchema = z.object ({

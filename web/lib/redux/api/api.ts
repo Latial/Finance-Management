@@ -200,9 +200,12 @@ export type StatisticsResponse = {
     biggestExpend :number
     smallestExpend : number
     monthlyExpend : number
-    fixedCostCount : number
+    fixedCostsCount : number
     bigPurchasesCount : number
     flexibleCostsCount : number
+    fixedCostsCountMonth : number
+    flexibleCostsCountMonth : number
+    bigPurchasesCountMonth : number
 }
 export type LogoutApiResponse = unknown;
 export type LogoutApiArg = void;
