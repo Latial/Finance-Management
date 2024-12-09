@@ -46,6 +46,9 @@ public class StatisticsService {
         var fixedCostsCount = expendRepository.countExpendByTypeId(1L);
         var flexibleCostsCount = expendRepository.countExpendByTypeId(2L);
         var bigPurchaseCount = expendRepository.countExpendByTypeId(3L);
+        var fixCostsCountMoth = historyRepository.findTotalFixedCountForMonthYear(Math.toIntExact(statisticsRequest.getMonth()),2024);
+        var flexibleCostsCountMoth = historyRepository.findTotalFlexibleCountForMonthYear(Math.toIntExact(statisticsRequest.getMonth()),2024);
+        var bigPurchaseCountMoth = historyRepository.findTotalBigPurchaseCountForMonthYear(Math.toIntExact(statisticsRequest.getMonth()),2024);
         Statistics stat = statisticsRepository.count() > 0
                 ? statisticsRepository.findByUserId(Long.parseLong(statisticsRequest.getUserId()))
                 : new Statistics();
@@ -59,6 +62,9 @@ public class StatisticsService {
         stat.setFixedCostsCount(Double.valueOf(fixedCostsCount));
         stat.setFlexibleCostsCount(Double.valueOf(flexibleCostsCount));
         stat.setBigPurchasesCount(Double.valueOf(bigPurchaseCount));
+        stat.setFixedCostsCountMonth(fixCostsCountMoth);
+        stat.setFlexibleCostsCountMonth(flexibleCostsCountMoth);
+        stat.setBigPurchasesCountMonth(bigPurchaseCountMoth);
 
         statisticsRepository.save(stat);
         return statisticsRepository.findById(stat.getId())

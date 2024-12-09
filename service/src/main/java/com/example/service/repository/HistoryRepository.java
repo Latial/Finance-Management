@@ -15,4 +15,10 @@ public interface HistoryRepository extends JpaRepository<History, Long> , JpaSpe
     List<Object> findByIdOrderByExpendPrice(Long id);
     @Query("SELECT SUM(h.expendPrice) FROM History as h WHERE EXTRACT(MONTH FROM h.date) = :month AND EXTRACT(YEAR FROM h.date) = :year")
     Double findTotalSpendingsForMonthAndYear(@Param("month") int month, @Param("year") int year);
+    @Query("SELECT COUNT(h.type.id) FROM History as h WHERE  h.type.id = 1 AND EXTRACT(MONTH FROM h.date) = :month AND EXTRACT(YEAR FROM h.date) = :year")
+    Double findTotalFixedCountForMonthYear(@Param("month") int month, @Param("year") int year);
+    @Query("SELECT COUNT(h.type.id) FROM History as h WHERE  h.type.id = 2 AND EXTRACT(MONTH FROM h.date) = :month AND EXTRACT(YEAR FROM h.date) = :year")
+    Double findTotalFlexibleCountForMonthYear(@Param("month") int month, @Param("year") int year);
+    @Query("SELECT COUNT(h.type.id) FROM History as h WHERE  h.type.id = 3 AND EXTRACT(MONTH FROM h.date) = :month AND EXTRACT(YEAR FROM h.date) = :year")
+    Double findTotalBigPurchaseCountForMonthYear(@Param("month") int month, @Param("year") int year);
 }

@@ -10,7 +10,6 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
-@Service
 @Table(name = "user_statistics")
 public class Statistics {
     @Id
@@ -36,6 +35,16 @@ public class Statistics {
 
     @Column(name = "bigPurchasesCount", nullable = true)
     private Double bigPurchasesCount;
+
+    @Column(name = "fixedCostsCountMonth", nullable = true)
+    private Double fixedCostsCountMonth;
+
+    @Column(name = "flexibleCostsCountMonth", nullable = true)
+    private Double flexibleCostsCountMonth;
+
+    @Column(name = "bigPurchasesCountMonth", nullable = true)
+    private Double bigPurchasesCountMonth;
+
 
     @Column(name = "monthlyExpend", nullable = true)
     private Double monthlyExpend;

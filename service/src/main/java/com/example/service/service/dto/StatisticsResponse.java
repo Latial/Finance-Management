@@ -14,7 +14,11 @@ public class StatisticsResponse {
     private Double biggestExpend;
     private Double smallestExpend;
     private Double monthlyExpend;
-    private Double fixedCostCount;
+    private Double fixedCostsCount;
     private Double bigPurchasesCount;
     private Double flexibleCostsCount;
+    private Double fixedCostsCountMonth;
+    private Double flexibleCostsCountMonth;
+    private Double bigPurchasesCountMonth;
+
 }
