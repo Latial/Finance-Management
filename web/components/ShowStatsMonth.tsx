@@ -34,6 +34,7 @@ import {
 import {Check, ChevronsUpDown} from "lucide-react";
 import {PieChart} from "@mui/x-charts/PieChart";
 import {BarChart} from "@mui/x-charts";
+import {watch} from "node:fs";
 
 const formSchema = z.object ({
     month: z.string({
@@ -133,7 +134,7 @@ export default function ShowStatsMonth() {
                                                         <CommandInput placeholder="Search month..."/>
                                                         <CommandList>
                                                             <CommandEmpty>No language found.</CommandEmpty>
-                                                            <CommandGroup>
+                                                            <CommandGroup className= "myself">
                                                                 {months.map((month) => (
                                                                     <CommandItem
                                                                         value={month.label}
@@ -195,12 +196,17 @@ export default function ShowStatsMonth() {
                         width={400}
                         height={200}
                     />
-                    <BarChart
-                        xAxis={[{ scaleType: 'band', data: ['group A', 'group B'] }]}
-                        series={[{ data: [4, 3] }, { data: [1, 6] }, { data: [2, 5] }]}
-                        width={500}
-                        height={300}
-                    />
+                    <div className = "flex flex-row">
+                        <BarChart
+                            xAxis={[{ scaleType: 'band', data: ['Selected Month', 'Avrage'] }]}
+                            series={[{ data:  [data ? data.fixedCostsCountMonth : 0 , 2]}, { data: [data ? data.flexibleCostsCountMonth : 0, 6] }, { data: [data ? data.bigPurchasesCountMonth : 0, 5] }]}
+                            width={500}
+                            height={300}
+                        />
+                        <div>
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </>
