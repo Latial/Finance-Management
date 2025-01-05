@@ -12,4 +12,5 @@ public class StatisticsRequest {
     @NotNull
     private String userId;
     private Long month;
+    private Long year;
 }
