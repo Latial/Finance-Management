@@ -27,15 +27,7 @@ const formSchema = z.object ({
     price : z.preprocess((a) => parseInt(z.string().parse(a),10),z.number().gte(18, 'Must be 18 and above')),
     type: z.enum(["Fixed Costs", "Flexible Costs", "Big Purchases"], {
         required_error: "You need to select a type.",
-    }),
-    month: z.string({
-        required_error: "Please select a language.",
-    }),
-})
-const formSchema2 = z.object ({
-    month: z.string({
-        required_error: "Please select a language.",
-    }),
+    })
 })
 export default function ExpendType() {
     const [data, setData] = useState<any[]>([])
@@ -50,15 +42,15 @@ export default function ExpendType() {
 
 
     const [add, addResult] = useExpanseAloneMutation();
-    const[addStat, statResult] = useStatsMutation();
+    const [addStat, statResult] = useStatsMutation();
     const [addHistory, addHistoryResult] = useHistoryMutation();
     const [user, setUser] = useState("default");
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            item : "",
-            price : 0,
+            item: "",
+            price: 0,
         },
     })
 
@@ -71,21 +63,21 @@ export default function ExpendType() {
                     name: values.item,
                     price: values.price,
                     typeName: values.type,
-                    userId : id
+                    userId: id
                 }
             })
             const resultHistory = await addHistory({
                 historyRequest: {
-                    date : new Date(Date.now()),
+                    date: new Date(Date.now()),
                     name: values.item,
                     price: values.price,
                     typeName: values.type,
-                    userId : id
+                    userId: id
                 }
             })
             const resultStat = await addStat({
                 statsRequest: {
-                    userId : id
+                    userId: id
                 }
             })
             if ("data" in result) {
@@ -103,23 +95,24 @@ export default function ExpendType() {
 
         }
     }
+
     const months = [
-        { label: "January", value: "1" },
-        { label: "February", value: "2" },
-        { label: "March", value: "3" },
-        { label: "April", value: "4" },
-        { label: "May", value: "5" },
-        { label: "June", value: "6" },
-        { label: "July", value: "7" },
-        { label: "August", value: "8" },
-        { label: "September", value: "9" },
-        { label: "October", value: "10" },
-        { label: "November", value: "11" },
-        { label: "December", value: "12" }
+        {label: "January", value: "1"},
+        {label: "February", value: "2"},
+        {label: "March", value: "3"},
+        {label: "April", value: "4"},
+        {label: "May", value: "5"},
+        {label: "June", value: "6"},
+        {label: "July", value: "7"},
+        {label: "August", value: "8"},
+        {label: "September", value: "9"},
+        {label: "October", value: "10"},
+        {label: "November", value: "11"},
+        {label: "December", value: "12"}
     ] as const
 
     return (
-        <div className = "flex flex-row gap-6">
+        <div className="flex flex-row gap-6">
             <div className="p-5 bg-[#191917] rounded-3xl">
                 <h1 className="text-2xl font-bold flex items-center mb-10">
                     AddExpanse
@@ -166,7 +159,7 @@ export default function ExpendType() {
                             <FormField
                                 control={form.control}
                                 name="type"
-                                render={({ field }) => (
+                                render={({field}) => (
                                     <FormItem className="space-y-3">
                                         <FormLabel>Expend type</FormLabel>
                                         <FormControl>
@@ -178,7 +171,7 @@ export default function ExpendType() {
                                                 {data.map((data, index) =>
                                                     <FormItem className="flex items-center space-x-3 space-y-0">
                                                         <FormControl>
-                                                            <RadioGroupItem value= {data.type} />
+                                                            <RadioGroupItem value={data.type} key={data.id}/>
                                                         </FormControl>
                                                         <FormLabel className="font-normal">
                                                             {data.type}
@@ -187,7 +180,7 @@ export default function ExpendType() {
                                                 )}
                                             </RadioGroup>
                                         </FormControl>
-                                        <FormMessage />
+                                        <FormMessage/>
                                     </FormItem>
                                 )}
                             />
@@ -199,7 +192,6 @@ export default function ExpendType() {
                     </Form>
                 </div>
             </div>
-            <ShowStatsMonth/>
-            </div>
-            )
-            }
+        </div>
+    )
+}

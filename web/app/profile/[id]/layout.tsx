@@ -35,12 +35,12 @@ export default async function Profile(props : any) {
 
     const tabs = [
         {
-            label: "Add Expanse",
-            href: `/profile/${id}/addExpense`,
-        },
-        {
             label: "Home",
             href: `/profile/${id}`,
+        },
+        {
+            label: "Add Expanse",
+            href: `/profile/${id}/addExpense`,
         },
         {
             label: "History",

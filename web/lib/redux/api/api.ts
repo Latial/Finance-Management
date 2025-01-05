@@ -186,6 +186,7 @@ export type HistoryRequest = {
 export type StatsRequest = {
     userId? : string;
     month? : string;
+    year ? : string;
 }
 export type ExpendAddResponse = {
     result? : Array<any>;
