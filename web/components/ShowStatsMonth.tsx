@@ -44,6 +44,7 @@ const formSchema = z.object ({
         required_error: "Please select a year.",
     }),
 })
+// @ts-ignore
 export default function ShowStatsMonth(dataHistory) {
     const[addStat, statResult] = useStatsMutation();
     const [data, setData] = useState<StatisticsResponse | undefined>(undefined);
@@ -106,12 +107,13 @@ export default function ShowStatsMonth(dataHistory) {
     const weeklyPrices: number[] = Array(7).fill(0); // Initialize with zeroes
 
 // Safely map prices to the corresponding day and sum them
+    // @ts-ignore
     dataHistory.dataHistory.forEach((single) => {
         let dayIndex = new Date(single.date).getDay() - 1; // Adjust index for Monday start (0=Monday, 6=Sunday)
         if (dayIndex < 0) dayIndex = 6; // Adjust Sunday to the last index (6)
 
         // Add the parsed expendPrice to the corresponding day's total sum
-        const price = parseFloat(single.expendPrice);
+        const price = parseFloat(single.price);
         if (!isNaN(price)) {
             weeklyPrices[dayIndex] += price;
         }

@@ -2,15 +2,16 @@ import React from "react";
 import {TextIcon} from "lucide-react";
 import ShowStatsMonth from "@/components/ShowStatsMonth";
 import fetchJson from "@/lib/fetch";
-import {GetWholeHistoryApiResponse} from "@/lib/redux/api/api";
+import {GetAllExpendsApiResponse, GetWholeHistoryApiResponse} from "@/lib/redux/api/api";
 
 
+// @ts-ignore
 export default async function ProfilePage(locale) {
-    const history = await fetchJson<GetWholeHistoryApiResponse>(`/api/history`);
+    const expends = await fetchJson<GetAllExpendsApiResponse>(`/api/expend`);
 
     const getStartOfWeek = () => {
         const today = new Date();
-        const firstDayOfWeek = new Date(today.setDate(today.getDate() - today.getDay() - 7)); // Monday
+        const firstDayOfWeek = new Date(today.setDate(today.getDate() - today.getDay() + 1)); // Monday
         console.log(firstDayOfWeek)
         firstDayOfWeek.setHours(0, 0, 0, 0); // Start of day
         return firstDayOfWeek;
@@ -18,7 +19,7 @@ export default async function ProfilePage(locale) {
 
     const getEndOfWeek = () => {
         const today = new Date();
-        const lastDayOfWeek = new Date(today.setDate(today.getDate() - today.getDay())); // Sunday
+        const lastDayOfWeek = new Date(today.setDate(today.getDate()) + 1); // Sunday
         console.log(lastDayOfWeek)
         lastDayOfWeek.setHours(23, 59, 59, 999); // End of day
         return lastDayOfWeek;
@@ -47,7 +48,7 @@ export default async function ProfilePage(locale) {
                     <h1 className="text-2xl font-bold flex items-center mb-10">
                         Expanses this week
                     </h1>
-                    {history
+                    {expends
                         .filter(single => {
                             const date = new Date(single.date);
                             return date >= startOfWeek && date <= endOfWeek;
@@ -55,15 +56,15 @@ export default async function ProfilePage(locale) {
                         .map((single, index) => (
                             <div className="flex flex-row items-center gap-5" key={index}>
                                 <p>{single.id}</p>
-                                <p>{single.date.toString()} ({new Date(single.date.toString()).toLocaleDateString(locale, { weekday: 'long' })})</p>
+                                <p>{new Date(single.date).toLocaleDateString()} ({new Date(single.date.toString()).toLocaleDateString(locale, { weekday: 'long' })})</p>
                                 <p className="text-xl">{single.type.type}</p>
-                                <h4 className="text-xl">{single.expendName}</h4>
-                                <p className="text-xl">${single.expendPrice}</p>
+                                <h4 className="text-xl">{single.name}</h4>
+                                <p className="text-xl">${single.price}</p>
                             </div>
                         ))}
                 </div>
             </div>
-            <ShowStatsMonth dataHistory = {history.filter(single => {
+            <ShowStatsMonth dataHistory = {expends.filter(single => {
                 const date = new Date(single.date);
                 return date >= startOfWeek && date <= endOfWeek;
             })}/>

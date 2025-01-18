@@ -72,7 +72,8 @@ export default function ExpendType() {
                     name: values.item,
                     price: values.price,
                     typeName: values.type,
-                    userId: id
+                    userId: id,
+                    status : "Added"
                 }
             })
             const resultStat = await addStat({

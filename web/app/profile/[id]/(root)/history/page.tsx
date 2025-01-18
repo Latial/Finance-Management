@@ -16,6 +16,8 @@ export default async function History() {
                     <p className="text-xl">{single.type.type}</p>
                     <h4 className="text-xl">{single.expendName}</h4>
                     <p className="text-xl">${single.expendPrice}</p>
+                    {single.status == "Added" ? <p className="text-xl text-green-500">{single.status}</p> :
+                        <p className="text-xl text-red-500">{single.status}</p>}
                 </div>
             )}
         </div>

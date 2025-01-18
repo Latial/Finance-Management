@@ -63,7 +63,14 @@ const injectedRtkApi = api.enhanceEndpoints({
                 }),
                 invalidatesTags: ["expend-controller"],
             }),
-
+            expanseRemove: build.mutation<ExpendRemoveApiResponse, ExpendRemoveApiArg>({
+                query: (queryArg) => ({
+                    url: `/api/profile/remove`,
+                    method: "DELETE",
+                    body: queryArg.expendRemoveRequest,
+                }),
+                invalidatesTags: ["expend-controller"],
+            }),
             expanseAlone: build.mutation<ExpendAloneApiResponse, ExpendAloneApiArg>({
                 query: (queryArg) => ({
                     url: `/api/expend/addExpend`,
@@ -122,6 +129,7 @@ export type ExpendResponse = {
     name : string;
     price :string;
     type: ExpendTypeResponse;
+    date : Date;
 }
 export type HistoryResponseAll = {
     id:number;
@@ -129,6 +137,7 @@ export type HistoryResponseAll = {
     expendName : string;
     expendPrice :string;
     type: ExpendTypeResponse;
+    status : string;
 }
 export type RegisterUserRequest = {
     password: string;
@@ -158,8 +167,9 @@ export type GetProfileApiArg = {
     idOrMe: string;
 };
 export type ExpendAddApiResponse = ExpendAddResponse;
+export type ExpendRemoveApiResponse = ExpendRemoveResponse;
 export type ExpendAddApiArg = {expendRequest : ExpendRequest}
-
+export type ExpendRemoveApiArg = {expendRemoveRequest : ExpendRemoveRequest}
 export type ExpendAloneApiResponse = ExpendAloneResponse;
 export type HistoryApiResponse = HistoryResponse;
 export type StatsApiResponse = StatisticsResponse;
@@ -169,6 +179,10 @@ export type StatsApiArg = {statsRequest : StatsRequest}
 export type ExpendRequest = {
     user_id : number;
     type_id : number;
+}
+export type ExpendRemoveRequest = {
+    expend_id : number;
+    user_id : string;
 }
 export type ExpendAloneRequest = {
     name : string;
@@ -182,6 +196,7 @@ export type HistoryRequest = {
     price : number;
     typeName : string;
     userId? : string;
+    status : string;
 }
 export type StatsRequest = {
     userId? : string;
@@ -190,6 +205,9 @@ export type StatsRequest = {
 }
 export type ExpendAddResponse = {
     result? : Array<any>;
+}
+export type ExpendRemoveResponse = {
+    result? : ""
 }
 export type ExpendAloneResponse = {
     result? : Array<any>;
@@ -214,6 +232,7 @@ export { injectedRtkApi as api };
 export const {
     useAuthorizeMutation,
     useExpanseAloneMutation,
+    useExpanseRemoveMutation,
     useHistoryMutation,
     useStatsMutation,
     useExpanseAddMutation,
