@@ -36,6 +36,11 @@ public class ProfileController {
         var reponse = profileServices.addExpend(expendAddRequest);
         return ResponseEntity.ok(reponse);
     }
+    @DeleteMapping("/remove")
+    public ResponseEntity<ExpendRemoveResponse> removeExpend(@RequestBody @Valid ExpendRemoveRequest expendRemoveRequest) {
+        var reponse = profileServices.removeExpend(expendRemoveRequest);
+        return ResponseEntity.ok(reponse);
+    }
     /*@PostMapping("/favorite")
     public ResponseEntity<FavoriteResponse> addFavorite(@RequestBody FavoriteRequest favoriteRequest) {
         var response = profileServices.addFavoriteBeats(favoriteRequest);

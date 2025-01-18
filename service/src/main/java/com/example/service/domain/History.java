@@ -35,4 +35,7 @@ public class History {
     @JoinColumn(name = "type_id")
     private ExpendType type;
 
+    @Column(name = "status", unique = false)
+    private String status;
+
 }

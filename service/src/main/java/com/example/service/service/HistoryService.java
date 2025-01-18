@@ -45,6 +45,7 @@ public class HistoryService {
         history.setDate(new Date());
         history.setExpendName(historyRequest.getName());
         history.setExpendPrice(historyRequest.getPrice());
+        history.setStatus(historyRequest.getStatus());
 
         historyRepository.save(history);
         return HistoryResponse

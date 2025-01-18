@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -17,6 +18,9 @@ public class Expend {
     @OrderBy
     @Column(name = "id")
     private Long id;
+
+    @Column(name = "date", unique = false, nullable = false)
+    private Date date;
 
     @Column(name = "name")
     private String name;

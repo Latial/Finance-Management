@@ -48,7 +48,17 @@ public class ProfileServices {
                 .builder()
                 .build();
     }
-
+    @Transactional
+    public ExpendRemoveResponse removeExpend(ExpendRemoveRequest expendRemoveRequest) {
+        var expend = expendRepository.findById(expendRemoveRequest.getExpend_id())
+                .orElseThrow(() -> new EntityNotFoundException("Expend not found"));
+        if(expend.getUser().getId() == Long.parseLong(expendRemoveRequest.getUser_id())) {
+            expendRepository.delete(expend);
+        }
+        return ExpendRemoveResponse
+                .builder()
+                .build();
+    }
     @Transactional
     public List<UserProfileResponse> getFavorite() {
         return userRepository

@@ -42,13 +42,13 @@ public class StatisticsService {
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
         var expendHigh = expendRepository.findTopExpenseByUserId(Long.parseLong(statisticsRequest.getUserId()));
         var expendLow = expendRepository.findLowestExpenseByUserId(Long.parseLong(statisticsRequest.getUserId()));
-        var monthlyExpends = historyRepository.findTotalSpendingsForMonthAndYear(Math.toIntExact(statisticsRequest.getMonth()),Math.toIntExact(statisticsRequest.getYear()));
+        var monthlyExpends = expendRepository.findTotalSpendingsForMonthAndYear(Math.toIntExact(statisticsRequest.getMonth()),Math.toIntExact(statisticsRequest.getYear()));
         var fixedCostsCount = expendRepository.countExpendByTypeId(1L);
         var flexibleCostsCount = expendRepository.countExpendByTypeId(2L);
         var bigPurchaseCount = expendRepository.countExpendByTypeId(3L);
-        var fixCostsCountMoth = historyRepository.findTotalFixedCountForMonthYear(Math.toIntExact(statisticsRequest.getMonth()),Math.toIntExact(statisticsRequest.getYear()));
-        var flexibleCostsCountMoth = historyRepository.findTotalFlexibleCountForMonthYear(Math.toIntExact(statisticsRequest.getMonth()),Math.toIntExact(statisticsRequest.getYear()));
-        var bigPurchaseCountMoth = historyRepository.findTotalBigPurchaseCountForMonthYear(Math.toIntExact(statisticsRequest.getMonth()),Math.toIntExact(statisticsRequest.getYear()));
+        var fixCostsCountMoth = expendRepository.findTotalFixedCountForMonthYear(Math.toIntExact(statisticsRequest.getMonth()),Math.toIntExact(statisticsRequest.getYear()));
+        var flexibleCostsCountMoth = expendRepository.findTotalFlexibleCountForMonthYear(Math.toIntExact(statisticsRequest.getMonth()),Math.toIntExact(statisticsRequest.getYear()));
+        var bigPurchaseCountMoth = expendRepository.findTotalBigPurchaseCountForMonthYear(Math.toIntExact(statisticsRequest.getMonth()),Math.toIntExact(statisticsRequest.getYear()));
         Statistics stat = statisticsRepository.count() > 0
                 ? statisticsRepository.findByUserId(Long.parseLong(statisticsRequest.getUserId()))
                 : new Statistics();

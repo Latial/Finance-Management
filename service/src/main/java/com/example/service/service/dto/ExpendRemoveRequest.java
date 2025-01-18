@@ -12,15 +12,9 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class HistoryRequest {
+public class ExpendRemoveRequest {
     @NotNull
-    private String name;
+    private Long expend_id;
     @NotNull
-    private Double price;
-    @NotNull
-    private String typeName;
-    @NotNull
-    private String userId;
-    @NotNull
-    private String status;
+    private String user_id;
 }

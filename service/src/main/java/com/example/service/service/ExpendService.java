@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -39,6 +40,7 @@ public class ExpendService {
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
 
         var expend = new Expend();
+        expend.setDate(new Date());
         expend.setName(expendAloneRequest.getName());
         expend.setPrice(expendAloneRequest.getPrice());
         expend.setType(expendType);

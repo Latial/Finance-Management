@@ -1,21 +1,18 @@
 package com.example.service.service.dto;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ExpendResponse {
-    private Long id;
-    private String name;
-    private String price;
-    private Date date;
-
-    private ExpendTypeResponse type;
+public class ExpendRemoveResponse {
+    String response;
 }

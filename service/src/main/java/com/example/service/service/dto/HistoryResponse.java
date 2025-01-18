@@ -18,4 +18,5 @@ public class HistoryResponse {
     private String expendName;
     private String expendPrice;
     private ExpendTypeResponse type;
+    private String status;
 }
