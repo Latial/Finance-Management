@@ -24,7 +24,7 @@ const formSchema = z.object ({
     item: z.string()
         .min(1, "Item Name is required")
         .max(50, "Name can have max 40 characters"),
-    price : z.preprocess((a) => parseInt(z.string().parse(a),10),z.number().gte(18, 'Must be 18 and above')),
+    price : z.preprocess((a) => parseInt(z.string().parse(a),10),z.number().gte(1, 'Must be 1 and above')),
     type: z.enum(["Fixed Costs", "Flexible Costs", "Big Purchases"], {
         required_error: "You need to select a type.",
     })

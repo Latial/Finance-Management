@@ -225,6 +225,7 @@ export type StatisticsResponse = {
     fixedCostsCountMonth : number
     flexibleCostsCountMonth : number
     bigPurchasesCountMonth : number
+    smallestMonthlyPurchase : number
 }
 export type LogoutApiResponse = unknown;
 export type LogoutApiArg = void;

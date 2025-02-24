@@ -271,7 +271,7 @@ export default function ShowStatsMonth(dataHistory) {
                     <div className="flex flex-col mt-2 gap-2">
                         <p>Monthly Expend : ${data ? data.monthlyExpend : 0}</p>
                         <p>Biggest Expend : ${data ? data.biggestExpend : 0}</p>
-                        <p>Smallest Expend : ${data ? data.smallestExpend : 0}</p>
+                        <p>Smallest Expend : ${data ? data.smallestMonthlyPurchase : 0}</p>
                         <p>Big Purchase {data ? data.bigPurchasesCountMonth : 0}</p>
                         <p>Fixed Costs : {data ? data.fixedCostsCountMonth : 0}</p>
                         <p>Flexible Costs :{data ? data.flexibleCostsCountMonth : 0}</p>
