@@ -45,6 +45,8 @@ public class Statistics {
     @Column(name = "bigPurchasesCountMonth", nullable = true)
     private Double bigPurchasesCountMonth;
 
+    @Column(name = "smallestMonthlyPurchase", nullable = true)
+    private Double smallestMonthlyPurchase;
 
     @Column(name = "monthlyExpend", nullable = true)
     private Double monthlyExpend;

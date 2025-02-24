@@ -12,8 +12,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface ExpendRepository extends JpaRepository<Expend, Long> , JpaSpecificationExecutor<Expend> {
-    @Query("SELECT e FROM Expend e WHERE e.user.id = :userId ORDER BY e.price DESC")
-    List<Expend> findTopExpenseByUserId(@Param("userId") Long userId);
+    @Query("SELECT e FROM Expend e WHERE e.user.id = :userId AND EXTRACT(MONTH FROM e.date) = :month AND EXTRACT(YEAR FROM e.date) = :year ORDER BY e.price DESC")
+    List<Expend> findTopExpenseByUserId(@Param("userId") Long userId, @Param("month") int month, @Param("year") int year);
     @Query("SELECT e FROM Expend e WHERE e.user.id = :userId ORDER BY e.price ASC")
     List<Expend> findLowestExpenseByUserId(@Param("userId") Long userId);
     Long countExpendByTypeId(Long typeId);
@@ -27,4 +27,6 @@ public interface ExpendRepository extends JpaRepository<Expend, Long> , JpaSpeci
     Double findTotalBigPurchaseCountForMonthYear(@Param("month") int month, @Param("year") int year);
     @Query("SELECT e FROM Expend e WHERE e.date >= :startOfWeek AND e.date <= :endOfWeek")
     List<Expend> findRecordsBetweenDates(@Param("startOfWeek") LocalDate startOfWeek, @Param("endOfWeek") LocalDate endOfWeek);
+    @Query("SELECT e FROM Expend e WHERE e.user.id = :userId AND EXTRACT(MONTH FROM e.date) = :month AND EXTRACT(YEAR FROM e.date) = :year ORDER BY e.price ASC")
+    List<Expend> findTopExpenseByUserIdMonth(@Param("userId") Long userId, @Param("month") int month, @Param("year") int year);
 }

@@ -40,7 +40,7 @@ public class StatisticsService {
     public StatisticsResponse addStat(StatisticsRequest statisticsRequest) {
         var user = userRepository.findById(Long.parseLong(statisticsRequest.getUserId()))
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
-        var expendHigh = expendRepository.findTopExpenseByUserId(Long.parseLong(statisticsRequest.getUserId()));
+        var expendHigh = expendRepository.findTopExpenseByUserId(Long.parseLong(statisticsRequest.getUserId()),Math.toIntExact(statisticsRequest.getMonth()),Math.toIntExact(statisticsRequest.getYear()));
         var expendLow = expendRepository.findLowestExpenseByUserId(Long.parseLong(statisticsRequest.getUserId()));
         var monthlyExpends = expendRepository.findTotalSpendingsForMonthAndYear(Math.toIntExact(statisticsRequest.getMonth()),Math.toIntExact(statisticsRequest.getYear()));
         var fixedCostsCount = expendRepository.countExpendByTypeId(1L);
@@ -49,6 +49,7 @@ public class StatisticsService {
         var fixCostsCountMoth = expendRepository.findTotalFixedCountForMonthYear(Math.toIntExact(statisticsRequest.getMonth()),Math.toIntExact(statisticsRequest.getYear()));
         var flexibleCostsCountMoth = expendRepository.findTotalFlexibleCountForMonthYear(Math.toIntExact(statisticsRequest.getMonth()),Math.toIntExact(statisticsRequest.getYear()));
         var bigPurchaseCountMoth = expendRepository.findTotalBigPurchaseCountForMonthYear(Math.toIntExact(statisticsRequest.getMonth()),Math.toIntExact(statisticsRequest.getYear()));
+        var smallestMonthlyPurchase = expendRepository.findTopExpenseByUserIdMonth(Long.parseLong(statisticsRequest.getUserId()), Math.toIntExact(statisticsRequest.getMonth()),Math.toIntExact(statisticsRequest.getYear()));
         Statistics stat = statisticsRepository.count() > 0
                 ? statisticsRepository.findByUserId(Long.parseLong(statisticsRequest.getUserId()))
                 : new Statistics();
@@ -65,6 +66,7 @@ public class StatisticsService {
         stat.setFixedCostsCountMonth(fixCostsCountMoth);
         stat.setFlexibleCostsCountMonth(flexibleCostsCountMoth);
         stat.setBigPurchasesCountMonth(bigPurchaseCountMoth);
+        stat.setSmallestMonthlyPurchase(smallestMonthlyPurchase.getFirst().getPrice());
 
         statisticsRepository.save(stat);
         return statisticsRepository.findById(stat.getId())

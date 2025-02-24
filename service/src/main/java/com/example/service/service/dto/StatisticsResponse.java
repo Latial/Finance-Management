@@ -20,5 +20,5 @@ public class StatisticsResponse {
     private Double fixedCostsCountMonth;
     private Double flexibleCostsCountMonth;
     private Double bigPurchasesCountMonth;
-
+    private Double smallestMonthlyPurchase;
 }
