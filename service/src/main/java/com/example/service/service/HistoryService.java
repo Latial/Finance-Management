@@ -11,6 +11,8 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -25,12 +27,10 @@ public class HistoryService {
     private final UserRepository userRepository;
 
     @Transactional(readOnly = true)
-    public List<HistoryResponse> getWholeHistory() {
+    public Page<HistoryResponse> getWholeHistory(Pageable pageable) {
         return historyRepository
-                .findAll()
-                .stream()
-                .map(historyMapper::toResponse)
-                .toList();
+                .findAll(pageable)
+                .map(historyMapper::toResponse);
     }
     @Transactional
     public HistoryResponse addHistoryDate(HistoryRequest historyRequest) {
