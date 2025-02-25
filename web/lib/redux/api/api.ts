@@ -213,7 +213,12 @@ export type ExpendAloneResponse = {
     result? : Array<any>;
 }
 export type HistoryResponse = {
-    result? : Array<any>;
+    id: number;
+    date : Date;
+    expendName : string;
+    expendPrice : string;
+    type : ExpendTypeResponse;
+    status : string
 }
 export type StatisticsResponse = {
     biggestExpend :number
@@ -227,6 +232,32 @@ export type StatisticsResponse = {
     bigPurchasesCountMonth : number
     smallestMonthlyPurchase : number
 }
+export type PageHistoryResponse = {
+    totalPages?: number;
+    totalElements?: number;
+    size?: number;
+    content?: HistoryResponse[];
+    number?: number;
+    sort?: SortObject;
+    first?: boolean;
+    last?: boolean;
+    numberOfElements?: number;
+    pageable?: PageableObject;
+    empty?: boolean;
+};
+export type SortObject = {
+    empty?: boolean;
+    sorted?: boolean;
+    unsorted?: boolean;
+};
+export type PageableObject = {
+    offset?: number;
+    sort?: SortObject;
+    pageNumber?: number;
+    pageSize?: number;
+    paged?: boolean;
+    unpaged?: boolean;
+};
 export type LogoutApiResponse = unknown;
 export type LogoutApiArg = void;
 export { injectedRtkApi as api };

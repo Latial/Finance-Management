@@ -39,14 +39,14 @@ const NavBar = () => {
                     </Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                    <Link href="/history" legacyBehavior passHref>
+                    <Link href="/expends" legacyBehavior passHref>
                         <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                             Expends
                         </NavigationMenuLink>
                     </Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                    <Link href="/jobs" legacyBehavior passHref>
+                    <Link href="/history" legacyBehavior passHref>
                         <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                             History
                         </NavigationMenuLink>
